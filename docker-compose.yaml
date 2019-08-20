@@ -1,0 +1,137 @@
+--- 
+networks: 
+  main: 
+    driver: bridge
+    ipam: 
+      config: 
+        - 
+          subnet: 172.30.255.0/24
+      driver: default
+services: 
+  nats-streaming-1: 
+    command: 
+      - "--cluster_id"
+      - nats-streaming
+      - "--store"
+      - file
+      - "--dir"
+      - /data/msg
+      - "--clustered"
+      - "--cluster_node_id"
+      - nats-streaming-1
+      - "--cluster_peers"
+      - "nats-streaming-2,nats-streaming-3"
+      - "--cluster_log_path"
+      - /data/log
+      - "--cluster_raft_logging"
+      - "--stan_debug"
+      - "--stan_trace"
+      - "--port"
+      - "4222"
+      - "--http_port"
+      - "8222"
+      - "--debug"
+      - "--routes"
+      - "nats://nats-streaming-2:6222,nats://nats-streaming-3:6222"
+      - "--cluster"
+      - "nats://nats-streaming-1:6222"
+      - "--hb_interval"
+      - 2s
+      - "--hb_fail_count"
+      - "1"
+    expose: 
+      - "6222"
+    image: "nats-streaming:0.16.0"
+    networks: 
+      main: 
+        ipv4_address: "172.30.255.10"
+    ports: 
+      - "14222:4222"
+      - "18222:8222"
+    volumes: 
+      - "./nats-streaming-1:/data"
+  nats-streaming-2: 
+    command: 
+      - "--cluster_id"
+      - nats-streaming
+      - "--store"
+      - file
+      - "--dir"
+      - /data/msg
+      - "--clustered"
+      - "--cluster_node_id"
+      - nats-streaming-2
+      - "--cluster_peers"
+      - "nats-streaming-1,nats-streaming-3"
+      - "--cluster_log_path"
+      - /data/log
+      - "--cluster_raft_logging"
+      - "--stan_debug"
+      - "--stan_trace"
+      - "--port"
+      - "4222"
+      - "--http_port"
+      - "8222"
+      - "--debug"
+      - "--routes"
+      - "nats://nats-streaming-1:6222,nats://nats-streaming-3:6222"
+      - "--cluster"
+      - "nats://nats-streaming-2:6222"
+      - "--hb_interval"
+      - 2s
+      - "--hb_fail_count"
+      - "1"
+    expose: 
+      - "6222"
+    image: "nats-streaming:0.16.0"
+    networks: 
+      main: 
+        ipv4_address: "172.30.255.20"
+    ports: 
+      - "24222:4222"
+      - "28222:8222"
+    volumes: 
+      - "./nats-streaming-2:/data"
+  nats-streaming-3: 
+    command: 
+      - "--cluster_id"
+      - nats-streaming
+      - "--store"
+      - file
+      - "--dir"
+      - /data/msg
+      - "--clustered"
+      - "--cluster_node_id"
+      - nats-streaming-3
+      - "--cluster_peers"
+      - "nats-streaming-1,nats-streaming-2"
+      - "--cluster_log_path"
+      - /data/log
+      - "--cluster_raft_logging"
+      - "--stan_debug"
+      - "--stan_trace"
+      - "--port"
+      - "4222"
+      - "--http_port"
+      - "8222"
+      - "--debug"
+      - "--routes"
+      - "nats://nats-streaming-1:6222,nats://nats-streaming-2:6222"
+      - "--cluster"
+      - "nats://nats-streaming-3:6222"
+      - "--hb_interval"
+      - 2s
+      - "--hb_fail_count"
+      - "1"
+    expose: 
+      - "6222"
+    image: "nats-streaming:0.16.0"
+    networks: 
+      main: 
+        ipv4_address: "172.30.255.30"
+    ports: 
+      - "34222:4222"
+      - "38222:8222"
+    volumes: 
+      - "./nats-streaming-3:/data"
+version: "3.7"
