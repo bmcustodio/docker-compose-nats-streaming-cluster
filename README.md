@@ -4,36 +4,36 @@ A three-node [NATS Streaming](https://github.com/nats-io/nats-streaming-server) 
 
 ## Starting
 
-To start the cluster, run
+To start the NATS Streaming cluster, run
 
 ```
 $ docker-compose up
 (...)
-nats-streaming-3_1  | [1] 2019/08/20 13:17:02.219196 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.0
+nats-streaming-2_1  | [1] 2019/11/22 11:19:22.929732 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.2
 (...)
-nats-streaming-2_1  | [1] 2019/08/20 13:17:02.343457 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.0
+nats-streaming-3_1  | [1] 2019/11/22 11:19:22.891077 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.2
 (...)
-nats-streaming-1_1  | [1] 2019/08/20 13:17:02.448176 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.0
+nats-streaming-1_1  | [1] 2019/11/22 11:19:23.083572 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.2
 (...)
 ```
 
 ## Connecting
 
-To connect to the cluster, point your NATS Streaming client at one of `127.0.0.1:{14222,24222,34222}`:
+To connect to the NATS Streaming cluster, point your NATS Streaming client at one of `127.0.0.1:{14222,24222,34222}`.
 
 ## Stopping
 
-To stop the cluster, hit `Ctrl+C`.
+To stop the NATS Streaming cluster, hit `Ctrl+C`.
 
 ## Destroying
 
-To desstroy the cluster, run
+To destroy the NATS Streaming cluster, run
 
 ```
 $ docker-compose down
 Removing docker-compose-nats-streaming-cluster_nats-streaming-3_1 ... done
-Removing docker-compose-nats-streaming-cluster_nats-streaming-2_1 ... done
 Removing docker-compose-nats-streaming-cluster_nats-streaming-1_1 ... done
+Removing docker-compose-nats-streaming-cluster_nats-streaming-2_1 ... done
 Removing network docker-compose-nats-streaming-cluster_main
 ```
 

@@ -41,7 +41,7 @@ services:
       - "1"
     expose: 
       - "6222"
-    image: "nats-streaming:0.16.0"
+    image: "nats-streaming:0.16.2"
     networks: 
       main: 
         ipv4_address: "172.30.255.10"
@@ -83,7 +83,7 @@ services:
       - "1"
     expose: 
       - "6222"
-    image: "nats-streaming:0.16.0"
+    image: "nats-streaming:0.16.2"
     networks: 
       main: 
         ipv4_address: "172.30.255.20"
@@ -125,7 +125,7 @@ services:
       - "1"
     expose: 
       - "6222"
-    image: "nats-streaming:0.16.0"
+    image: "nats-streaming:0.16.2"
     networks: 
       main: 
         ipv4_address: "172.30.255.30"
