@@ -4,8 +4,7 @@ networks:
     driver: bridge
     ipam: 
       config: 
-        - 
-          subnet: 172.30.255.0/24
+        - subnet: 172.30.255.0/24
       driver: default
 services: 
   nats-streaming-1: 
@@ -17,10 +16,9 @@ services:
       - "--dir"
       - /data/msg
       - "--clustered"
+      - "--cluster_bootstrap"
       - "--cluster_node_id"
       - nats-streaming-1
-      - "--cluster_peers"
-      - "nats-streaming-2,nats-streaming-3"
       - "--cluster_log_path"
       - /data/log
       - "--cluster_raft_logging"
@@ -31,20 +29,15 @@ services:
       - "--http_port"
       - "8222"
       - "--debug"
-      - "--routes"
-      - "nats://nats-streaming-2:6222,nats://nats-streaming-3:6222"
       - "--cluster"
-      - "nats://nats-streaming-1:6222"
+      - "nats://0.0.0.0:5222"
       - "--hb_interval"
       - 2s
       - "--hb_fail_count"
       - "1"
-    expose: 
-      - "6222"
+      - "--hb_timeout"
+      - 5s
     image: "nats-streaming:0.16.2"
-    networks: 
-      main: 
-        ipv4_address: "172.30.255.10"
     ports: 
       - "14222:4222"
       - "18222:8222"
@@ -61,8 +54,6 @@ services:
       - "--clustered"
       - "--cluster_node_id"
       - nats-streaming-2
-      - "--cluster_peers"
-      - "nats-streaming-1,nats-streaming-3"
       - "--cluster_log_path"
       - /data/log
       - "--cluster_raft_logging"
@@ -74,19 +65,16 @@ services:
       - "8222"
       - "--debug"
       - "--routes"
-      - "nats://nats-streaming-1:6222,nats://nats-streaming-3:6222"
+      - "nats://nats-streaming-1:5222"
       - "--cluster"
-      - "nats://nats-streaming-2:6222"
+      - "nats://0.0.0.0:5222"
       - "--hb_interval"
       - 2s
       - "--hb_fail_count"
       - "1"
-    expose: 
-      - "6222"
+      - "--hb_timeout"
+      - 5s
     image: "nats-streaming:0.16.2"
-    networks: 
-      main: 
-        ipv4_address: "172.30.255.20"
     ports: 
       - "24222:4222"
       - "28222:8222"
@@ -103,8 +91,6 @@ services:
       - "--clustered"
       - "--cluster_node_id"
       - nats-streaming-3
-      - "--cluster_peers"
-      - "nats-streaming-1,nats-streaming-2"
       - "--cluster_log_path"
       - /data/log
       - "--cluster_raft_logging"
@@ -116,19 +102,16 @@ services:
       - "8222"
       - "--debug"
       - "--routes"
-      - "nats://nats-streaming-1:6222,nats://nats-streaming-2:6222"
+      - "nats://nats-streaming-1:5222"
       - "--cluster"
-      - "nats://nats-streaming-3:6222"
+      - "nats://0.0.0.0:5222"
       - "--hb_interval"
       - 2s
       - "--hb_fail_count"
       - "1"
-    expose: 
-      - "6222"
+      - "--hb_timeout"
+      - 5s
     image: "nats-streaming:0.16.2"
-    networks: 
-      main: 
-        ipv4_address: "172.30.255.30"
     ports: 
       - "34222:4222"
       - "38222:8222"
