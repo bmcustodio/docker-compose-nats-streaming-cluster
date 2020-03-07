@@ -1,120 +1,136 @@
---- 
-networks: 
-  main: 
+# Copyright 2017-2020 bmcstdio
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+networks:
+  main:
     driver: bridge
-    ipam: 
-      config: 
+    ipam:
+      config:
         - subnet: 172.30.255.0/24
       driver: default
-services: 
-  nats-streaming-1: 
-    command: 
+services:
+  nats-streaming-1:
+    command:
+      - "--cluster"
+      - "nats://0.0.0.0:6222"
       - "--cluster_id"
       - nats-streaming
-      - "--store"
-      - file
-      - "--dir"
-      - /data/msg
       - "--clustered"
       - "--cluster_bootstrap"
+      - "--cluster_log_path"
+      - /data/log
       - "--cluster_node_id"
       - nats-streaming-1
-      - "--cluster_log_path"
-      - /data/log
       - "--cluster_raft_logging"
-      - "--stan_debug"
-      - "--stan_trace"
-      - "--port"
-      - "4222"
+      - "--debug"
+      - "--dir"
+      - /data/msg
       - "--http_port"
       - "8222"
-      - "--debug"
-      - "--cluster"
-      - "nats://0.0.0.0:5222"
+      - "--port"
+      - "4222"
+      - "--store"
+      - file
+      - "--stan_debug"
       - "--hb_interval"
       - 2s
       - "--hb_fail_count"
       - "1"
       - "--hb_timeout"
       - 5s
-    image: "nats-streaming:0.16.2"
-    ports: 
+    image: "nats-streaming:0.17.0"
+    networks:
+      - main
+    ports:
       - "14222:4222"
       - "18222:8222"
-    volumes: 
+    volumes:
       - "./nats-streaming-1:/data"
-  nats-streaming-2: 
-    command: 
+  nats-streaming-2:
+    command:
+      - "--cluster"
+      - "nats://0.0.0.0:6222"
       - "--cluster_id"
       - nats-streaming
-      - "--store"
-      - file
-      - "--dir"
-      - /data/msg
       - "--clustered"
+      - "--cluster_log_path"
+      - /data/log
       - "--cluster_node_id"
       - nats-streaming-2
-      - "--cluster_log_path"
-      - /data/log
       - "--cluster_raft_logging"
-      - "--stan_debug"
-      - "--stan_trace"
-      - "--port"
-      - "4222"
-      - "--http_port"
-      - "8222"
       - "--debug"
-      - "--routes"
-      - "nats://nats-streaming-1:5222"
-      - "--cluster"
-      - "nats://0.0.0.0:5222"
-      - "--hb_interval"
-      - 2s
-      - "--hb_fail_count"
-      - "1"
-      - "--hb_timeout"
-      - 5s
-    image: "nats-streaming:0.16.2"
-    ports: 
-      - "24222:4222"
-      - "28222:8222"
-    volumes: 
-      - "./nats-streaming-2:/data"
-  nats-streaming-3: 
-    command: 
-      - "--cluster_id"
-      - nats-streaming
-      - "--store"
-      - file
       - "--dir"
       - /data/msg
-      - "--clustered"
-      - "--cluster_node_id"
-      - nats-streaming-3
-      - "--cluster_log_path"
-      - /data/log
-      - "--cluster_raft_logging"
-      - "--stan_debug"
-      - "--stan_trace"
-      - "--port"
-      - "4222"
       - "--http_port"
       - "8222"
-      - "--debug"
+      - "--port"
+      - "4222"
+      - "--store"
+      - file
+      - "--stan_debug"
       - "--routes"
       - "nats://nats-streaming-1:5222"
-      - "--cluster"
-      - "nats://0.0.0.0:5222"
       - "--hb_interval"
       - 2s
       - "--hb_fail_count"
       - "1"
       - "--hb_timeout"
       - 5s
-    image: "nats-streaming:0.16.2"
-    ports: 
+    image: "nats-streaming:0.17.0"
+    networks:
+      - main
+    ports:
+      - "24222:4222"
+      - "28222:8222"
+    volumes:
+      - "./nats-streaming-2:/data"
+  nats-streaming-3:
+    command:
+      - "--cluster"
+      - "nats://0.0.0.0:6222"
+      - "--cluster_id"
+      - nats-streaming
+      - "--clustered"
+      - "--cluster_log_path"
+      - /data/log
+      - "--cluster_node_id"
+      - nats-streaming-3
+      - "--cluster_raft_logging"
+      - "--debug"
+      - "--dir"
+      - /data/msg
+      - "--http_port"
+      - "8222"
+      - "--port"
+      - "4222"
+      - "--store"
+      - file
+      - "--stan_debug"
+      - "--routes"
+      - "nats://nats-streaming-1:6222"
+      - "--hb_interval"
+      - 2s
+      - "--hb_fail_count"
+      - "1"
+      - "--hb_timeout"
+      - 5s
+    image: "nats-streaming:0.17.0"
+    networks:
+      - main
+    ports:
       - "34222:4222"
       - "38222:8222"
-    volumes: 
+    volumes:
       - "./nats-streaming-3:/data"
 version: "3.7"

@@ -1,6 +1,8 @@
 # docker-compose-nats-streaming-cluster
 
-A three-node [NATS Streaming](https://github.com/nats-io/nats-streaming-server) cluster running on top of [Docker Compose](https://docs.docker.com/compose/) for testing purposes.
+A three-node [NATS Streaming](https://github.com/nats-io/nats-streaming-server) cluster running on top of [Docker Compose](https://docs.docker.com/compose/), for testing purposes.
+
+![License](https://img.shields.io/github/license/bmcstdio/docker-compose-nats-streaming-cluster)
 
 ## Starting
 
@@ -9,11 +11,11 @@ To start the NATS Streaming cluster, run
 ```
 $ docker-compose up
 (...)
-nats-streaming-2_1  | [1] 2019/11/22 11:19:22.929732 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.2
+nats-streaming-2_1  | [1] 2020/03/07 13:55:23.689466 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.17.0
 (...)
-nats-streaming-3_1  | [1] 2019/11/22 11:19:22.891077 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.2
+nats-streaming-1_1  | [1] 2020/03/07 13:55:23.870350 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.17.0
 (...)
-nats-streaming-1_1  | [1] 2019/11/22 11:19:23.083572 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.16.2
+nats-streaming-3_1  | [1] 2020/03/07 13:55:23.868682 [INF] STREAM: Starting nats-streaming-server[nats-streaming] version 0.17.0
 (...)
 ```
 
@@ -39,7 +41,7 @@ Removing network docker-compose-nats-streaming-cluster_main
 
 ## License
 
-Copyright 2019 bmcstdio
+Copyright 2019-2020 bmcstdio
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
